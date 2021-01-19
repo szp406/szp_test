@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-//123456788898
+
 //setBeanName->setBeanClassLoader->setBeanFactory->setApplicationContext->postConstructMethod->afterPropertiesSet
 // ->postProcessBeforeInitialization->postProcessAfterInitialization->ApplicationRunner->commandlineRunner
 @Component
