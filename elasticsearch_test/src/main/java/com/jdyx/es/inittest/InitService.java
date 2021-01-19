@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-//setBeanName->setBeanClassLoader->setBeanFactory->setApplicationContext->afterPropertiesSet
+//setBeanName->setBeanClassLoader->setBeanFactory->setApplicationContext->postConstructMethod->afterPropertiesSet
 // ->postProcessBeforeInitialization->postProcessAfterInitialization->ApplicationRunner->commandlineRunner
 @Component
 public class InitService implements ApplicationRunner, CommandLineRunner, BeanNameAware, BeanFactoryAware, BeanClassLoaderAware, ApplicationContextAware,
@@ -36,6 +36,7 @@ public class InitService implements ApplicationRunner, CommandLineRunner, BeanNa
         System.out.println("invoke setBeanName:    " + name);
     }
 
+    //来自BeanFactoryAware
     @Override
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
         System.out.println("02-->BeanFactoryAware接口被调用了    "+ beanFactory.toString());
