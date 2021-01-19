@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 日志配置文件调试模式,生产环境关闭 -->
+<configuration debug="false" scan="true" scanPeriod="1 seconds">
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<!-- 获取项目名称名称 -->
+	​
+	<springProperty scope="context" name="springAppName"
+		source="spring.application.name" />
+	<!-- 输出文件夹位置 -->
+	<property name="LOG_FILE" value="${BUILD_FOLDER:-build}/${springAppName}" />
+	<!-- 彩色日志格式 -->
+	<property name="CONSOLE_LOG_PATTERN"
+		value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}" />
+
+	<!-- 控制台 输出设置 -->
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+	<!-- 文件夹输出设置 -->
+	<appender name="file"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--定义日志输出的路径 -->
+		<file>${LOG_FILE}/logs/${springAppName}.log</file>
+		<!--定义基于时间和大小的滚动策略滚动的策略 -->
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!--/////////每小时 <fileNamePattern>${LOG_FILE}/logs/${springAppName}.%d{yyyy-MM-dd_HH}.%i.log.gz 
+				/////////每分钟 <fileNamePattern>${LOG_FILE}/logs/${springAppName}.%d{yyyy-MM-dd_HH-mm}.%i.log.gz -->
+			<!--定义基于时间的滚动策略(每天) -->
+			<fileNamePattern>${LOG_FILE}/logs/${springAppName}.%d.%i.log.gz
+			</fileNamePattern>
+			<!--60天的时间周期，日志量最大20GB,单个日志大小100M -->
+			<maxFileSize>100MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<!--定义输出格式 -->
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+	<!-- 文件夹输出设置 -->
+	<appender name="fileErr"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--定义日志输出的路径 -->
+		<file>${LOG_FILE}/logs/${springAppName}_Err.log</file>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印ERROR日志 -->
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<!--定义日志滚动的策略 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!--定义文件滚动时的文件名的格式 -->
+			<fileNamePattern>${LOG_FILE}/logs/${springAppName}_Err.%d.%i.log.gz
+			</fileNamePattern>
+			<!--60天的时间周期，日志量最大20GB,单个日志大小100M -->
+			<maxFileSize>100MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<!--定义输出格式 -->
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+	
+	<appender name="platLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}/logs/${springAppName}_plat.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}/logs/${springAppName}_plat.%d.%i.log.gz
+			</fileNamePattern>
+			<maxFileSize>100MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+	<appender name="platErrLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}/logs/${springAppName}_plat_err.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}/logs/${springAppName}_plat_err.%d.%i.log.gz
+			</fileNamePattern>
+			<maxFileSize>100MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+	<appender name="tradeLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}/logs/${springAppName}_trade.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}/logs/${springAppName}_trade.%d.%i.log.gz
+			</fileNamePattern>
+			<maxFileSize>100MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+	<appender name="tradeApiLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}/logs/${springAppName}_trade_api.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}/logs/${springAppName}_trade_api.%d.%i.log.gz
+			</fileNamePattern>
+			<maxFileSize>100MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+	<appender name="sdkPlatLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}/logs/${springAppName}_sdk_plat.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}/logs/${springAppName}_sdk_plat.%d.%i.log.gz
+			</fileNamePattern>
+			<maxFileSize>100MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+	<appender name="sdkDebugLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}/logs/${springAppName}_sdk_debug.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}/logs/${springAppName}_sdk_debug.%d.%i.log.gz
+			</fileNamePattern>
+			<maxFileSize>100MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+	<appender name="sdkErrorLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}/logs/${springAppName}_sdk_error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}/logs/${springAppName}_sdk_error.%d.%i.log.gz
+			</fileNamePattern>
+			<maxFileSize>100MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+<!-- 
+参数名					默认值		说明
+exchangeName			logs		用于发布日志事件的交换器名称．
+exchangeType			topic		发布日志事件的交换器类型- 只在appender声明了交换器的情况下才需要. 参考declareExchange.
+routingKeyPattern		%c.%p		日志子系统生成路由键的模式格式．
+applicationId						Application ID - 如果模式包含 %X{applicationId}，则将其添加到路由键
+senderPoolSize			2			用于发布日志事件的线程数目.
+maxSenderRetries		30			当broker不可用时或有某些错误时，重试的次数. 延时重试像: N ^ log(N), N 表示重试次数.
+addresses							一个逗号分隔的broker地址列表: host:port[,host:port]* -覆盖host 和 port.
+host					localhost	要连接RabbitMQ的主机.
+port					5672		端口
+virtualHost				/			要连接的RabbitMQ虚拟主机
+username				guest		要连接RabbitMQ的用户．
+password				guest		要连接RabbitMQ的用户密码．
+contentType				text/plain  日志消息的content-type属性
+contentEncoding						 日志消息的content-encoding属性.
+declareExchange			false		当appender启动时，是否需要声明配置的交换器．也可参考 durable 和autoDelete.
+durable					true		当declareExchange 为 true ，durable 标志才会设置此值.
+autoDelete				false		当 declareExchange 为true ， auto delete 标志才会设置此值.
+charset					null		当将字符串转成byte[]时要使用的编码,默认为null (使用系统默认字符集).如果当前平台上不支持此字符集，将回退到使用系统字符集.
+deliveryMode			PERSISTENT	PERSISTENT 或 NON_PERSISTENT 用于决定RabbitMQ是否应该持久化消息．
+generateId				false		用于确定messageId 属性是否需要设置成唯一值.
+clientConnectionProperties	null	一个逗号分隔的key:value 对，它是连接RabbitMQ时设置的自定义客户端属性
+ -->
+
+	<!--root是默认的logger -->
+	<root level="info">
+		<!--定义了两个appender，日志会通过往这两个appender里面写 -->
+		<appender-ref ref="stdout" />
+	</root>
+
+	<!--对于类路径以 com.example.logback 开头的Logger,输出级别设置为warn,并且只输出到控制台 -->
+	<!--这个logger没有指定appender，它会继承root节点中定义的那些appender -->
+	<!-- <logger name="com.example.logback" level="warn" /> -->
+
+	<!--通过 LoggerFactory.getLogger("mytest") 可以获取到这个logger -->
+	<!--由于这个logger自动继承了root的appender，root中已经有stdout的appender了，自己这边又引入了stdout的appender -->
+	<!--如果没有设置 additivity="false" ,就会导致一条日志在控制台输出两次的情况 -->
+	<!--additivity表示要不要使用rootLogger配置的appender进行输出 -->
+	<logger name="TRADE_API_LOG" level="debug" additivity="true">
+		<appender-ref ref="tradeApiLog" />
+	</logger>
+	<logger name="TRADE_LOG" level="debug" additivity="true">
+		<appender-ref ref="tradeLog" />
+	</logger>
+	<logger name="SDK_PLAT_LOG" level="debug" additivity="true">
+		<appender-ref ref="sdkPlatLog" />
+	</logger>
+	<logger name="SDK_DEBUG_LOG" level="debug" additivity="true">
+		<appender-ref ref="sdkDebugLog" />
+	</logger>
+	<logger name="SDK_ERROR_LOG" level="debug" additivity="true">
+		<appender-ref ref="sdkErrorLog" />
+	</logger>
+	<logger name="PLAT_LOG" level="debug" additivity="true">
+		<appender-ref ref="platLog" />
+	</logger>
+	<logger name="PLAT_ERR_LOG" level="debug" additivity="true">
+		<appender-ref ref="platErrLog" />
+	</logger>
+
+	<!--由于设置了 additivity="false" ，所以输出时不会使用rootLogger的appender -->
+	<!--但是这个logger本身又没有配置appender，所以使用这个logger输出日志的话就不会输出到任何地方 -->
+	<!-- <logger name="mytest2" level="info" additivity="false" /> -->
+</configuration>

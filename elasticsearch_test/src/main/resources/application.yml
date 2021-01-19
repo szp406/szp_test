@@ -1,0 +1,25 @@
+server:
+  port: 15566
+spring: 
+  application:
+    name: es_test
+  jackson:
+    default-property-inclusion: NON_NULL
+    resources:
+      static-locations: classpath:templates/,classpath:static/,classpath:/public,classpath:/resources,classpath:/META-INF/resources
+    mvc:
+      static-path-pattern: /**
+      view:
+        prefix: /
+        suffix: .html
+
+elasticsearch:
+  schema: http
+  address: 127.0.0.1:9200,127.0.0.1:9201,127.0.0.1:9202
+  connectTimeout: 5000
+  socketTimeout: 5000
+  connectionRequestTimeout: 5000
+  maxConnectNum: 100
+  maxConnectPerRoute: 100
+#  user: admin
+#  password: 123abc
